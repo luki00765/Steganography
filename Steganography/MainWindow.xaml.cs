@@ -28,46 +28,43 @@ namespace Steganography
 			InitializeComponent();
 		}
 
-		private void EnctyptMethod(object sender, RoutedEventArgs e)
+		private void OpenImage(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Image Files (*.bmp;*.jpeg;*.png;*.jpg)|*.bmp;*.jpeg;*.png;*jpg";
 			dlg.Title = "Open Image File";
 			Nullable<bool> result = dlg.ShowDialog();
 
-			if(result == true)
+			if (result == true)
 			{
 				string path = dlg.FileName;
 				ImageSource imgSource = new BitmapImage(new Uri(path));
 				MyImage.Source = imgSource;
 				bmp = (BitmapImage)MyImage.Source;
 
-				if(MyImage.Source != null)
+				if (MyImage.Source != null)
 				{
 					TglButton.Visibility = System.Windows.Visibility.Visible;
-					// ukryj wiadomość
 				}
 			}
 		}
 
-		private void DecryptMethod(object sender, RoutedEventArgs e)
+		private void SaveImage(object sender, RoutedEventArgs e)
 		{
-			if(MyImage.Source != null)
+			if (MyImage.Source != null)
 			{
 				SaveFileDialog dlg = new SaveFileDialog();
-				dlg.Filter = "Image Files (*.bmp;*.jpeg;*.png;*.jpg)|*.bmp;*.jpeg;*.png;*jpg";
+				string extensionImage = CheckTheExtensionOnImageFile(bmp);
+				dlg.Filter = "Image File (*." + extensionImage + ")|*." + extensionImage;
 				dlg.Title = "Save Image File";
 				Nullable<bool> result = dlg.ShowDialog();
 
-				if(result == true)
+				if (result == true)
 				{
 					FileStream fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate);
-					// tablica dzięki której wyciągnę rozsrzeszenie pliku
-					string[] splitExtension = dlg.SafeFileName.Split(new Char[] { '.' });
-					
 					try
 					{
-						switch (splitExtension[1])
+						switch (extensionImage)
 						{
 							case "bmp":
 								{
@@ -99,8 +96,8 @@ namespace Steganography
 					}
 					fs.Close();
 				}
-				
-				
+
+
 			}
 			else
 			{
@@ -108,9 +105,20 @@ namespace Steganography
 			}
 		}
 
+		private string CheckTheExtensionOnImageFile(BitmapImage image)
+		{
+			string[] splitExtension = image.UriSource.AbsolutePath.Split(new Char[] { '.' });
+			return splitExtension[1];
+		}
+
 		private void CloseApp(object sender, RoutedEventArgs e)
 		{
 			Application.Current.Shutdown();
+		}
+
+		private void AboutApp(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("test");
 		}
 
 	}

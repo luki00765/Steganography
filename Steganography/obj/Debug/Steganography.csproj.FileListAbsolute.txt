@@ -16,7 +16,6 @@ c:\users\lukii\documents\visual studio 2013\Projects\Steganography\Steganography
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\Steganography.exe.config
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.exe
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.pdb
-C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csprojResolveAssemblyReference.cache
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\MainWindow.g.cs
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\App.g.cs
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\GeneratedInternalTypeHelper.g.cs
