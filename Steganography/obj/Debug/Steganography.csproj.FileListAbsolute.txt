@@ -13,3 +13,18 @@ c:\users\lukii\documents\visual studio 2013\Projects\Steganography\Steganography
 c:\users\lukii\documents\visual studio 2013\Projects\Steganography\Steganography\obj\Debug\Steganography.pdb
 c:\users\lukii\documents\visual studio 2013\Projects\Steganography\Steganography\obj\Debug\GeneratedInternalTypeHelper.g.cs
 c:\users\lukii\documents\visual studio 2013\Projects\Steganography\Steganography\obj\Debug\Steganography_MarkupCompile.lref
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\Steganography.exe.config
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.exe
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.pdb
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csprojResolveAssemblyReference.cache
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\MainWindow.g.cs
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\App.g.cs
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography_MarkupCompile.cache
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography_MarkupCompile.lref
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\Steganography.exe
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\Steganography.pdb
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\MainWindow.baml
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.g.resources
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.Properties.Resources.resources
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csproj.GenerateResource.Cache
