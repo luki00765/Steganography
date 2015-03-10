@@ -27,18 +27,22 @@
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem Header="Image">
+            <MenuItem Header="Image" Margin="10,0,0,0">
                 <MenuItem Header="Open" Click="OpenImage"/>
                 <Separator/>
                 <MenuItem Header="Save" Click="SaveImage"/>
             </MenuItem>
             <MenuItem Header="About" Click="AboutApp"/>
-            <MenuItem Header="Close" Click="CloseApp" HorizontalAlignment="Right" Margin="0,0,80,0" BorderBrush="Red"/>
+            <MenuItem Header="Close" Click="CloseApp" HorizontalAlignment="Right" Margin="0,0,80,2" BorderBrush="Red"/>
         </Menu>
         <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
-
+        <Separator Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="2" Height="2" HorizontalAlignment="Left" Margin="10,-3,0,-172">
+            <Separator.LayoutTransform>
+                <RotateTransform Angle="90" />
+            </Separator.LayoutTransform>
+        </Separator>
         <TextBlock Grid.Row="4" Grid.Column="1" Text="Łukasz Paczyński" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontFamily="Buxton Sketch"/>
-        <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="#FF000000" Width="374" Height="290" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,20,0">
+        <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="#FF000000" Width="374" Height="290" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,20,0" Background="White">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="Gray" Direction="235" Opacity=".5" RenderingBias="Quality" ShadowDepth="5" />
             </Border.Effect>
@@ -47,9 +51,15 @@
         <ToggleButton x:Name="TglButton"  Grid.Row="2" Grid.Column="0" Content="Write Message"  Width="90" Height="25" HorizontalAlignment="Center" Margin="0,0,0,0" Visibility="Hidden"/>
         <StackPanel Grid.Row="3" Grid.Column="0" Visibility="{Binding ElementName=TglButton, Path=IsChecked, Converter={StaticResource BoolVisibilityConverter}}">
             <TextBox Grid.Row="3" Grid.Column="0" Width="300" Height="75" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
-            <Button Grid.Row="3" Grid.Column="0" Content="Hide" Width="60" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5,0,0" />
+            <Button Grid.Row="3" Grid.Column="0" Content="Hide" Width="60" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5,0,0" Click="HideMethod"/>
         </StackPanel>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="Message:" FontSize="20" FontFamily="Buxton Sketch" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20"  Margin="0,20,0,0"/>
-        <TextBlock x:Name="MessageText" Grid.Row="1" Grid.Column="1" Width="150" Height="210"/>
+        <Button x:Name="DecodeBtn" Grid.Row="1" Grid.Column="1" Width="50" Height="25" Content="Decode" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" Visibility="Hidden" Click="DecodeMethod"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Message:" FontSize="20" FontFamily="Buxton Sketch" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20"  Margin="0,60,0,0" Visibility="{Binding ElementName=DecodeBtn, Path=Visibility}"/>
+        <Border Grid.Row="1" Grid.Column="1" Width="150" Height="210" VerticalAlignment="Bottom" Margin="0,0,0,10" BorderThickness="1" BorderBrush="#FF000000" Visibility="{Binding ElementName=DecodeBtn, Path=Visibility}">
+            <TextBox x:Name="MessageText" Grid.Row="1" Grid.Column="1" Width="150" Height="210" TextWrapping="Wrap" VerticalAlignment="Bottom" IsReadOnly="True" VerticalScrollBarVisibility="Visible"/>
+        </Border>
+
+        <ProgressBar x:Name="PBHide" Grid.Row="4" Minimum="0" Maximum="100" Width="200" Height="20" Opacity="0.7" Visibility="Hidden"/>
+        <ProgressBar x:Name="PBDecode" Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="100" Width="150" Height="20" Opacity="0.7" Visibility="Hidden"/>
     </Grid>
 </Window>

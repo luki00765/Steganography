@@ -45,6 +45,7 @@ namespace Steganography
 				if (MyImage.Source != null)
 				{
 					TglButton.Visibility = System.Windows.Visibility.Visible;
+					DecodeBtn.Visibility = System.Windows.Visibility.Visible;
 				}
 			}
 		}
@@ -118,8 +119,27 @@ namespace Steganography
 
 		private void AboutApp(object sender, RoutedEventArgs e)
 		{
-			MessageBox.Show("test");
+			MessageBox.Show("Praca magisterska. Uniwersytet Gdański 2015");
 		}
 
+		private void DecodeMethod(object sender, RoutedEventArgs e)
+		{
+			PBDecode.Visibility = System.Windows.Visibility.Visible;
+			PBDecode.Value += 5;
+			if(PBDecode.Value == 100)
+			{
+				MessageBox.Show("Done2");
+			}
+		}
+
+		private void HideMethod(object sender, RoutedEventArgs e)
+		{
+			PBHide.Visibility = System.Windows.Visibility.Visible;
+			PBHide.Value += 5;
+			if(PBHide.Value == 100)
+			{
+				MessageBox.Show("Done");
+			}
+		}
 	}
 }
