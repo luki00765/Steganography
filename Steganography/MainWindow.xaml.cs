@@ -140,7 +140,7 @@ namespace Steganography
 			{
 				MessageBox.Show("Done");
 			}*/
-			SteganographyHelper.Encrypt(bmp, MessageText.Text);
+			SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
 		}
 	}
 }

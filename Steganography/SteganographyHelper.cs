@@ -22,6 +22,10 @@ namespace Steganography
 			byte[] pixels = new byte[size];
 			writeBitmap.CopyPixels(pixels, stride, 0);
 
+			List<string> listBinaryText = new List<string>();
+			int strideToBinary = bmpWidth * 3;
+			string[] binaryPixels = new string[bmpHeight * strideToBinary];
+
 			for (int i = 0; i < bmpHeight; i++)
 			{
 				for (int j = 0; j < bmpWidth; j++) // pętla idzie po szerokości obrazka ----->
@@ -31,8 +35,34 @@ namespace Steganography
 					G = pixels[index + 1];
 					B = pixels[index + 2];
 					A = pixels[index + 3];
+
+					int indexToBinaray = i * strideToBinary + 3 * j;
+					binaryPixels[indexToBinaray] = decToBin(R);
+					binaryPixels[indexToBinaray + 1] = decToBin(G);
+					binaryPixels[indexToBinaray + 2] = decToBin(B);
+					//binaryPixels[index + 3] = decToBin(A);
 				}
 			}
+
+			// przekształć tekst na postać binarną (8 bit) i dodaj do listy
+			foreach(char character in text)
+			{
+				string binaryCharacter = System.Convert.ToString(character, 2);
+				if (binaryCharacter.Length < 8)
+				{
+					string tmp = binaryCharacter;
+					binaryCharacter = "";
+					for (int i = 0; i < 8 - tmp.Length; i++)
+					{
+						binaryCharacter += "0";
+					}
+					binaryCharacter += tmp;
+				}
+				listBinaryText.Add(binaryCharacter);
+			}
+			//TODO:
+			//funkcja, która zmienia ostatnie wartości w każdej składowej na pierwszą wartość binarną danej litery
+			// potrzebna funkcja SetPixels
 		}
 
 		public static void Decrypt(BitmapImage bmp)
@@ -54,6 +84,17 @@ namespace Steganography
 				return result;
 			}
 			return decToBin;
+		}
+
+		public static void HideMessageInImage(int[] binaryTab, List<int> message)
+		{
+			foreach(char character in message)
+			{
+				for (int i = 0; i < 1; i++ )
+				{
+
+				}
+			}
 		}
 
 	}

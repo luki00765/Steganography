@@ -50,7 +50,7 @@
         </Border>
         <ToggleButton x:Name="TglButton"  Grid.Row="2" Grid.Column="0" Content="Write Message"  Width="90" Height="25" HorizontalAlignment="Center" Margin="0,0,0,0" Visibility="Hidden"/>
         <StackPanel Grid.Row="3" Grid.Column="0" Visibility="{Binding ElementName=TglButton, Path=IsChecked, Converter={StaticResource BoolVisibilityConverter}}">
-            <TextBox Grid.Row="3" Grid.Column="0" Width="300" Height="75" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
+            <TextBox x:Name="MessageToHide" Grid.Row="3" Grid.Column="0" Width="300" Height="75" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
             <Button Grid.Row="3" Grid.Column="0" Content="Hide" Width="60" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5,0,0" Click="HideMethod"/>
         </StackPanel>
         <Button x:Name="DecodeBtn" Grid.Row="1" Grid.Column="1" Width="50" Height="25" Content="Decode" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" Visibility="Hidden" Click="DecodeMethod"/>
