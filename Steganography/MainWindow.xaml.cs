@@ -134,12 +134,13 @@ namespace Steganography
 
 		private void HideMethod(object sender, RoutedEventArgs e)
 		{
-			PBHide.Visibility = System.Windows.Visibility.Visible;
+			/*PBHide.Visibility = System.Windows.Visibility.Visible;
 			PBHide.Value += 5;
 			if(PBHide.Value == 100)
 			{
 				MessageBox.Show("Done");
-			}
+			}*/
+			SteganographyHelper.Encrypt(bmp, MessageText.Text);
 		}
 	}
 }
