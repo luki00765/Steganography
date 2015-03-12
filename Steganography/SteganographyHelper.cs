@@ -63,11 +63,12 @@ namespace Steganography
 			//TODO:
 			//funkcja, która zmienia ostatnie wartości w każdej składowej na pierwszą wartość binarną danej litery
 			// potrzebna funkcja SetPixels
+			// długość całej wiadomości zapisz w ostatnim pikselu w składowej ALPHA. Przezroczystość ulegnie dużej zmianie; jednakże jest to lepsze niż zamiana koloru.
 		}
 
 		public static void Decrypt(BitmapImage bmp)
 		{
-
+			//odczytaj długość wiadomości w ostatnim pikselu; iteruj od początku obrazka po długości wiadomości.
 		}
 
 		public static string decToBin(int number)
