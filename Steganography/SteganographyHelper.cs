@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Steganography
 {
 	class SteganographyHelper
 	{
-		public static void Encrypt(BitmapImage bmp, string text)
+		public static BitmapImage Encrypt(BitmapImage bmp, string text)
 		{
 			WriteableBitmap writeBitmap = new WriteableBitmap(bmp);
 			byte R = 0, G = 0, B = 0, A = 0; //red grenn blue alpha (przezroczystość)
@@ -34,7 +35,7 @@ namespace Steganography
 					R = pixels[index];
 					G = pixels[index + 1];
 					B = pixels[index + 2];
-					A = pixels[index + 3];
+					//A = pixels[index + 3];
 
 					int indexToBinaray = i * strideToBinary + 3 * j;
 					binaryPixels[indexToBinaray] = decToBin(R);
@@ -60,10 +61,21 @@ namespace Steganography
 				}
 				listBinaryText.Add(binaryCharacter);
 			}
+
+			binaryPixels = HideMessageInImage(binaryPixels, listBinaryText);
+			int[] tableWithMessage = BinToDec(binaryPixels);
+			writeBitmap.WritePixels(bmp.SourceRect, tableWithMessage, stride, 0); // NIE WIADOMO CZY TO DZIAŁA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			
+			byte[] tmp22 = new byte[size]; // W TAMACH TESTÓW
+			writeBitmap.CopyPixels(tmp22, stride, 0);
+
+			return bmp;
+
 			//TODO:
 			//funkcja, która zmienia ostatnie wartości w każdej składowej na pierwszą wartość binarną danej litery
 			// potrzebna funkcja SetPixels
 			// długość całej wiadomości zapisz w ostatnim pikselu w składowej ALPHA. Przezroczystość ulegnie dużej zmianie; jednakże jest to lepsze niż zamiana koloru.
+			// za ukrytą wiadomością wstaw null: 0000 0000 później sprawdzaj 0,8,16,32,64  % 8 == 0 warunek konieczny, musi być 8 zer
 		}
 
 		public static void Decrypt(BitmapImage bmp)
@@ -87,15 +99,56 @@ namespace Steganography
 			return decToBin;
 		}
 
-		public static void HideMessageInImage(int[] binaryTab, List<int> message)
+		public static int[] BinToDec(string[] binaryPixels)
 		{
-			foreach(char character in message)
+			int[] tableWithMessage = new int[binaryPixels.Length];
+			for (int i = 0; i < binaryPixels.Length; i++ )
 			{
-				for (int i = 0; i < 1; i++ )
-				{
-
-				}
+				string tmp = binaryPixels[i];
+				tableWithMessage[i] = Convert.ToInt32(tmp, 2);
 			}
+			return tableWithMessage;
+		}
+
+		public static string[] HideMessageInImage(string[] binaryTab, List<string> message)
+		{
+			int j = 0;
+			for (int i = 0; i < binaryTab.Length; ) // pobierz długość tablicy z pikselami
+			{
+				for (; j < message.Count; j++ ) // j - ile jest liter to ukrycia
+				{
+					var tmp = message[j];
+					for (int k = 0; k < tmp.Length; k++ ) // k - pobierz długość wiadomości (8 zawsze) a następnie zastosuj algorytm LSB 
+					{
+						if(message.Count * tmp.Length > binaryTab.Length) // jeżeli ilość wiadomości pomnożona przez długość będzie większa od dosępnych pikseli to oznacza, że nie ma miejsca w tablicy aby pomieścić wiadomość
+						{
+							MessageBox.Show("Message is to long. Change the image for a larger or write smaller text");
+							return binaryTab;
+						}
+						// Algorytm LSB. ostatni element w tablicy binarnej zamieniamy na pierwsze element liczby binarnej, następnie kolejny itp.
+						/*Przykład:  tablica 11111111 11111111 11111111		wiadomość: 00 
+						 *  Rezultat: tablica 11111110 11111110 11111111
+						 * wybieramy najmniej znaczące bity i wstawiamy w nie wiadomość
+						 */
+						string tmpString = binaryTab[i];
+						tmpString = tmpString.Remove(7) + tmp[k];
+						binaryTab[i] = tmpString;
+						i++;
+					}
+				}
+
+				// po ukryciu wiadomości w obrazie zapisz po niej null czyli 0000 0000 aby później móc odkodować wiadomość.
+				for (int l = 0; l < 8; l++ )
+				{
+					string tmpString = binaryTab[i];
+					tmpString = tmpString.Remove(7) + "0";
+					binaryTab[i] = tmpString;
+					i++;
+				}
+				break;
+			}
+
+			return binaryTab;
 		}
 
 	}

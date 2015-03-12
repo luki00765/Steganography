@@ -27,4 +27,3 @@ C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\MainWindow
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.g.resources
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.Properties.Resources.resources
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csproj.GenerateResource.Cache
-C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csprojResolveAssemblyReference.cache

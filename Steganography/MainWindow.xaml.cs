@@ -140,7 +140,9 @@ namespace Steganography
 			{
 				MessageBox.Show("Done");
 			}*/
-			SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
+			bmp = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
+
+			bmp = (BitmapImage)MyImage.Source;
 		}
 	}
 }
