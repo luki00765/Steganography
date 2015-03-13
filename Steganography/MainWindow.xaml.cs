@@ -22,7 +22,8 @@ namespace Steganography
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private BitmapImage bmp = null;
+		public BitmapImage bmp = null;
+		string path;
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -37,10 +38,9 @@ namespace Steganography
 
 			if (result == true)
 			{
-				string path = dlg.FileName;
-				ImageSource imgSource = new BitmapImage(new Uri(path));
-				MyImage.Source = imgSource;
-				bmp = (BitmapImage)MyImage.Source;
+				path = dlg.FileName;
+				bmp = new BitmapImage(new Uri(path));
+				MyImage.Source = bmp;
 
 				if (MyImage.Source != null)
 				{
@@ -52,10 +52,10 @@ namespace Steganography
 
 		private void SaveImage(object sender, RoutedEventArgs e)
 		{
-			if (MyImage.Source != null)
+			if (MyImage.Source != null && bmp != null)
 			{
 				SaveFileDialog dlg = new SaveFileDialog();
-				string extensionImage = CheckTheExtensionOnImageFile(bmp);
+				string extensionImage = CheckTheExtensionOnImageFile(path);
 				dlg.Filter = "Image File (*." + extensionImage + ")|*." + extensionImage;
 				dlg.Title = "Save Image File";
 				Nullable<bool> result = dlg.ShowDialog();
@@ -97,18 +97,22 @@ namespace Steganography
 					}
 					fs.Close();
 				}
-
-
 			}
 			else
 			{
-				MessageBox.Show("You should use Encrypt function");
+				MessageBox.Show("You should Load Image before Saving");
 			}
 		}
 
-		private string CheckTheExtensionOnImageFile(BitmapImage image)
+		/*private string CheckTheExtensionOnImageFile(BitmapImage image)
 		{
 			string[] splitExtension = image.UriSource.AbsolutePath.Split(new Char[] { '.' });
+			return splitExtension[1];
+		}*/
+
+		private string CheckTheExtensionOnImageFile(string path)
+		{
+			string[] splitExtension = path.Split(new Char[] { '.' });
 			return splitExtension[1];
 		}
 
@@ -126,7 +130,7 @@ namespace Steganography
 		{
 			PBDecode.Visibility = System.Windows.Visibility.Visible;
 			PBDecode.Value += 5;
-			if(PBDecode.Value == 100)
+			if (PBDecode.Value == 100)
 			{
 				MessageBox.Show("Done2");
 			}
@@ -140,9 +144,35 @@ namespace Steganography
 			{
 				MessageBox.Show("Done");
 			}*/
-			bmp = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
+			if(MessageToHide.Text != "") // sprawdź czy wiadomość nie jest pusta
+			{
+				var modifiedImage = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
+				MyImage.Source = modifiedImage;
+				bmp = ConvertWriteableBitmapToBitmapImage(modifiedImage);
+			}
+			else
+			{
+				MessageBox.Show("Message what do you want to hide, cannot be empty!");
+			}
+			
+		}
 
-			bmp = (BitmapImage)MyImage.Source;
+		// konwerter z Typu WriteableBitmap który jest wynikiem obrazu z ukrytą wiadomością -> na BitmapImage, który jest obsłużony standardowo w aplikacji.
+		public BitmapImage ConvertWriteableBitmapToBitmapImage(WriteableBitmap wbm)
+		{
+			bmp = new BitmapImage();
+			using (MemoryStream stream = new MemoryStream())
+			{
+				PngBitmapEncoder encoder = new PngBitmapEncoder();
+				encoder.Frames.Add(BitmapFrame.Create(wbm));
+				encoder.Save(stream);
+				bmp.BeginInit();
+				bmp.CacheOption = BitmapCacheOption.OnLoad;
+				bmp.StreamSource = stream;
+				bmp.EndInit();
+				bmp.Freeze();
+			}
+			return bmp;
 		}
 	}
 }
