@@ -32,7 +32,7 @@ namespace Steganography
 		private void OpenImage(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Image Files (*.bmp;*.jpeg;*.png;*.jpg)|*.bmp;*.jpeg;*.png;*jpg";
+			dlg.Filter = "Images (*.bmp;*.jpeg;*.png;*.jpg;*.gif)|*.bmp;*.jpeg;*.png;*jpg;*gif";
 			dlg.Title = "Open Image File";
 			Nullable<bool> result = dlg.ShowDialog();
 
@@ -55,8 +55,7 @@ namespace Steganography
 			if (MyImage.Source != null && bmp != null)
 			{
 				SaveFileDialog dlg = new SaveFileDialog();
-				string extensionImage = CheckTheExtensionOnImageFile(path);
-				dlg.Filter = "Image File (*." + extensionImage + ")|*." + extensionImage;
+				dlg.Filter = "Png Image|*.png|Bitmap Image|*.bmp";
 				dlg.Title = "Save Image File";
 				Nullable<bool> result = dlg.ShowDialog();
 
@@ -65,24 +64,17 @@ namespace Steganography
 					FileStream fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate);
 					try
 					{
-						switch (extensionImage)
+						switch (dlg.FilterIndex)
 						{
-							case "bmp":
+							case 1:
 								{
 									BmpBitmapEncoder encoder = new BmpBitmapEncoder();
 									encoder.Frames.Add(BitmapFrame.Create(bmp));
 									encoder.Save(fs);
 									break;
 								}
-							case "jpg":
-							case "jpeg":
-								{
-									JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-									encoder.Frames.Add(BitmapFrame.Create(bmp));
-									encoder.Save(fs);
-									break;
-								}
-							case "png":
+
+							case 2:
 								{
 									PngBitmapEncoder encoder = new PngBitmapEncoder();
 									encoder.Frames.Add(BitmapFrame.Create(bmp));
@@ -102,18 +94,6 @@ namespace Steganography
 			{
 				MessageBox.Show("You should Load Image before Saving");
 			}
-		}
-
-		/*private string CheckTheExtensionOnImageFile(BitmapImage image)
-		{
-			string[] splitExtension = image.UriSource.AbsolutePath.Split(new Char[] { '.' });
-			return splitExtension[1];
-		}*/
-
-		private string CheckTheExtensionOnImageFile(string path)
-		{
-			string[] splitExtension = path.Split(new Char[] { '.' });
-			return splitExtension[1];
 		}
 
 		private void CloseApp(object sender, RoutedEventArgs e)
