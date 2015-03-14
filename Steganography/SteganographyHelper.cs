@@ -107,7 +107,7 @@ namespace Steganography
 					var tmp = message[j];
 					for (int k = 0; k < tmp.Length; k++ ) // k - pobierz długość wiadomości (8 zawsze) a następnie zastosuj algorytm LSB 
 					{
-						if(message.Count * tmp.Length + 8 - 2> binaryTab.Length) // jeżeli ilość wiadomości pomnożona przez długość będzie większa od dosępnych pikseli to oznacza, że nie ma miejsca w tablicy aby pomieścić wiadomość. 8 - to jest dodatkowe miejsce na null, ponieważ będzie od potrzebny przy dekodowaniu wiadmości. 2 jest odjęciem dwóch ALPHA - ponieważ na każde 8 pikseli przypadją dwie ALPHA'y
+						if(message.Count * tmp.Length + 8 >= binaryTab.Length) // jeżeli ilość wiadomości pomnożona przez długość będzie większa od dosępnych pikseli to oznacza, że nie ma miejsca w tablicy aby pomieścić wiadomość. 8 - to jest dodatkowe miejsce na null, ponieważ będzie od potrzebny przy dekodowaniu wiadmości.
 						{
 							MessageBox.Show("Message is to long. Change the image for a larger or write smaller text");
 							return binaryTab;

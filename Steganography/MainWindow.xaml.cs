@@ -148,6 +148,7 @@ namespace Steganography
 				MyImage.Source = modifiedImage;
 				bmp = ConvertWriteableBitmapToBitmapImage(modifiedImage);
 				MessageToHide.Text = "";
+				TglButton.IsChecked = false;
 			}
 			else
 			{
