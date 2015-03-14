@@ -46,6 +46,7 @@ namespace Steganography
 				{
 					TglButton.Visibility = System.Windows.Visibility.Visible;
 					DecodeBtn.Visibility = System.Windows.Visibility.Visible;
+					MessageText.Text = "";
 				}
 			}
 		}
@@ -57,6 +58,7 @@ namespace Steganography
 				SaveFileDialog dlg = new SaveFileDialog();
 				dlg.Filter = "Png Image|*.png|Bitmap Image|*.bmp";
 				dlg.Title = "Save Image File";
+				dlg.DefaultExt = "png";
 				Nullable<bool> result = dlg.ShowDialog();
 
 				if (result == true)
@@ -68,15 +70,14 @@ namespace Steganography
 						{
 							case 1:
 								{
-									BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+									PngBitmapEncoder encoder = new PngBitmapEncoder();
 									encoder.Frames.Add(BitmapFrame.Create(bmp));
 									encoder.Save(fs);
 									break;
 								}
-
 							case 2:
 								{
-									PngBitmapEncoder encoder = new PngBitmapEncoder();
+									BmpBitmapEncoder encoder = new BmpBitmapEncoder();
 									encoder.Frames.Add(BitmapFrame.Create(bmp));
 									encoder.Save(fs);
 									break;
