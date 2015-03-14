@@ -129,11 +129,9 @@ namespace Steganography
 		private void DecodeMethod(object sender, RoutedEventArgs e)
 		{
 			PBDecode.Visibility = System.Windows.Visibility.Visible;
-			PBDecode.Value += 5;
-			if (PBDecode.Value == 100)
-			{
-				MessageBox.Show("Done2");
-			}
+			SteganographyHelper steganographyHelper = new SteganographyHelper();
+			MessageText.Text = steganographyHelper.Decrypt(bmp);
+			//MessageText.Text = SteganographyHelper.Decrypt(bmp);
 		}
 
 		private void HideMethod(object sender, RoutedEventArgs e)
@@ -149,6 +147,7 @@ namespace Steganography
 				var modifiedImage = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
 				MyImage.Source = modifiedImage;
 				bmp = ConvertWriteableBitmapToBitmapImage(modifiedImage);
+				MessageToHide.Text = "";
 			}
 			else
 			{

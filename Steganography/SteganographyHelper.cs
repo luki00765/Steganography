@@ -159,11 +159,122 @@ namespace Steganography
 			return binaryTab;
 		}
 
-		public static void Decrypt(BitmapImage bmp)
+		List<string> MessageBinaryPixels = new List<string>(); // lista która będzie przechowywać tajną wiadomość
+		public string Decrypt(BitmapImage bmp)
 		{
 			//odczytaj długość wiadomości w ostatnim pikselu; iteruj od początku obrazka po długości wiadomości.
 			// za ukrytą wiadomością wstaw null: 0000 0000 później sprawdzaj 0,8,16,32,64  % 8 == 0 warunek konieczny, musi być 8 zer
+			string message = "";
+			WriteableBitmap writeBitmap = new WriteableBitmap(bmp);
+			byte R = 0, G = 0, B = 0, A = 0; //red grenn blue alpha (przezroczystość)
+
+			int bmpWidth = writeBitmap.PixelWidth; // szerokość obrazka
+			int bmpHeight = writeBitmap.PixelHeight; // wysokość obrazka
+
+			int stride = bmpWidth * 4; // Suma wszystkich pikseli w jednym wierszu
+			int size = bmpHeight * stride; // suma wszystkich pikseli w wierszy * długość obrazka = suma wszystkich pikseli w obrazie
+			byte[] pixels = new byte[size];
+			writeBitmap.CopyPixels(pixels, stride, 0);
+
+			int strideBinaryPixels = bmpWidth * 3;
+			int sizeBinaryPixels = bmpHeight * strideBinaryPixels;
+			string[] binaryPixels = new string[sizeBinaryPixels];
+
+			for (int i = 0; i < bmpHeight; i++)
+			{
+				for (int j = 0; j < bmpWidth; j++) // pętla idzie po szerokości obrazka ----->
+				{
+					int index = i * stride + 4 * j; // wyznaczamy indeks w tablicy jednowymiarowej "pixels". Chodzimy co 4 ponieważ w każdym pikselu mamy 4 składkowe RGBA
+					R = pixels[index];
+					G = pixels[index + 1];
+					B = pixels[index + 2];
+					A = pixels[index + 3];
+
+					int indexBinaryPixels = i * strideBinaryPixels + 3 * j;
+					binaryPixels[indexBinaryPixels] = decToBin(R);
+					binaryPixels[indexBinaryPixels + 1] = decToBin(G);
+					binaryPixels[indexBinaryPixels + 2] = decToBin(B);
+					//binaryPixels[index + 3] = decToBin(A);
+				}
+			}
+
+			bool isMessage = FindNull(binaryPixels);
+			if(isMessage != true) // jeśli wiadomość zostanie odnaleziona to ją odszyfruj i zwróć, w przeciwnym wypadku zwróć inofrmacje o tym, że wiadomość nie została odnaleziona
+			{
+				return "Secret message NOT FOUND!";
+			}
+
+			message = ExtractTheMessageFromList(); // zwróć wiadomosć
+
+			return message;
 		}
 
+		
+		// Metoda która szuka nulla, czyli 0000 0000. Został on zapisany zaraz po ukrytej wiadomości
+		public bool FindNull(string[] binaryPixels)
+		{
+			int counterZero = 0;
+			string tmpString = "";
+
+			for (int i = 0; i < binaryPixels.Length; i = i + 8 ) // każda litera jest zapisana w postaci binarnej 8bitowej; dlatego pętla skacze co 8 pozycji: 0, 7, 16, 32 ... i szuka ośmiu zer
+			{
+				for (int j = i; j < j + 8; j++ )
+				{
+					tmpString = binaryPixels[j];
+					tmpString = tmpString.Substring(tmpString.Length - 1, 1); // wyciągnij ostatni element z danej wartości binarnej i sprawdź czy jest zerem
+					if(tmpString == "0")
+					{
+						counterZero++; // zliczamy zera
+						if(counterZero == 8) // jeżeli uzbieramy osiem zer, to oznacza, że przed nimi znajduje się ukryta wiadomość, więc wystarczy ją teraz tylko wyciągnąć
+						{
+							for (int m = 0; m < i; m++ ) // wyciąganie ukrytej wiadomości; dodajemy ją do listy
+							{
+								MessageBinaryPixels.Add(binaryPixels[m]);
+							}
+							return true;
+						}
+					}
+					else
+					{
+						counterZero = 0;
+						break;
+					}
+				}
+			}
+			return false;
+		}
+
+		// funkcja, która wyodrębnia wiadomość z listy; następnie ją dekoduje i zwraca jako tekst
+		public string ExtractTheMessageFromList()
+		{
+			string message = "";
+			string tmp = "";
+
+			for (int i = 0; i < MessageBinaryPixels.Count; i++)
+			{
+				tmp = MessageBinaryPixels[i];
+				tmp = tmp.Substring(tmp.Length - 1, 1);
+				message += tmp;
+			}
+			//message = DecodeMessage(message);
+			var data = DecodeMessage(message); // data zawiera wartość DEC ASCII każdej wartości binarnej
+			var text = Encoding.ASCII.GetString(data); // DEC jest zamieniana na literę.
+			return text;
+		}
+
+		// funkcja odszyfruje wartość binarną i zwróci w DEC
+		public static Byte[] DecodeMessage(String binary)
+		{
+			var list = new List<Byte>();
+
+			for (int i = 0; i < binary.Length; i += 8)
+			{
+				String t = binary.Substring(i, 8);
+
+				list.Add(Convert.ToByte(t, 2));
+			}
+
+			return list.ToArray();
+		}
 	}
 }
