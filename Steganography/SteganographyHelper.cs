@@ -268,6 +268,16 @@ namespace Steganography
 			//message = DecodeMessage(message);
 			var data = DecodeMessage(message); // data zawiera wartość DEC ASCII każdej wartości binarnej
 			var text = Encoding.ASCII.GetString(data); // DEC jest zamieniana na literę.
+
+			for (int i = 0; i < data.Length; i++ ) // jeśli w tablicy "data" o typie Byte będzie większa wartość niż 127 to znaczy, że nia ma żadnej uktytej wiadomości.
+			{
+				if(data[i] > 127)
+				{
+					text = "";
+					return text;
+				}
+			}
+
 			return text;
 		}
 
