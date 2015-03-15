@@ -27,10 +27,10 @@ C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\MainWindow
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.g.resources
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.Properties.Resources.resources
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csproj.GenerateResource.Cache
-C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csprojResolveAssemblyReference.cache
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\WelcomePage.baml
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\WelcomePage.g.cs
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\MahApps.Metro.dll
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\System.Windows.Interactivity.dll
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\MahApps.Metro.xml
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\App.baml
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csprojResolveAssemblyReference.cache

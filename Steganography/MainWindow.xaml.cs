@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using System.Threading;
 
 namespace Steganography
 {
@@ -25,9 +26,11 @@ namespace Steganography
 	{
 		public BitmapImage bmp = null;
 		string path;
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			MyImage.Source = new BitmapImage(new Uri(@"pack://application:,,,/Images/noImage.jpg"));
 			prompt.Text = "Prompt: firstly You should load the Image";
 			prompt.Foreground = Brushes.DarkRed;
 		}
@@ -51,6 +54,7 @@ namespace Steganography
 					DecodeBtn.Visibility = System.Windows.Visibility.Visible;
 					MessageText.Text = "";
 					prompt.Text = "";
+					DecodeResult.Source = null;
 				}
 				else
 				{
@@ -118,19 +122,33 @@ namespace Steganography
 
 		private void DecodeMethod(object sender, RoutedEventArgs e)
 		{
+			DecodeResult.Source = null;
 			SteganographyHelper steganographyHelper = new SteganographyHelper();
 			MessageText.Text = steganographyHelper.Decrypt(bmp);
+
+			if (MessageText.Text != null && MessageText.Text != "Secret message NOT FOUND!")
+			{
+				DecodeResult.Source = new BitmapImage(new Uri(@"pack://application:,,,/Images/ok.jpg"));
+			}
+			// Sprawdź wszystkie przypadki; przypadek == "" jest dla zdjęć czarno-białych; przypadek Secret message NOT FOUND to jest zwrócona wiadomość która nie jest nullem, ale informuje o tym, że nic nie odnaleziono
+			if (MessageText.Text == "" || MessageText.Text == null || MessageText.Text == "Secret message NOT FOUND!")
+			{
+				MessageText.Text = "Secret message NOT FOUND!"; // przypadek dla obrazów czarno-białych które teoretycznie wykrywają wiadomość ale w postaci samych zer
+				DecodeResult.Source = new BitmapImage(new Uri(@"pack://application:,,,/Images/X.jpg"));
+			}
 		}
 
 		private void HideMethod(object sender, RoutedEventArgs e)
 		{
 			if(MessageToHide.Text != "") // sprawdź czy wiadomość nie jest pusta
 			{
+				MessageText.Text = "";
 				var modifiedImage = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
 				MyImage.Source = modifiedImage;
 				bmp = ConvertWriteableBitmapToBitmapImage(modifiedImage);
 				MessageToHide.Text = "";
 				TglButton.IsChecked = false;
+				DecodeResult.Source = null;
 
 				bool answer = SteganographyHelper.isMessageLargerThanImage;
 				if (answer == false)

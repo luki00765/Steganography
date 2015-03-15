@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.3-ALPHA005\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -113,6 +114,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\landscape.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ok.jpg" />
+    <Resource Include="Images\X.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\noImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -42,7 +42,7 @@
             <MenuItem Header="Close" Click="CloseApp" HorizontalAlignment="Right" Margin="0,0,80,2" BorderBrush="Red"/>
         </Menu>
         <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
-        <Separator Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="2" Height="2" HorizontalAlignment="Left" Margin="10,-3,0,-172">
+        <Separator Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="2" Height="2" HorizontalAlignment="Left" Margin="10,-3,0,-173">
             <Separator.LayoutTransform>
                 <RotateTransform Angle="90" />
             </Separator.LayoutTransform>
@@ -65,6 +65,6 @@
             <TextBox x:Name="MessageText" Grid.Row="1" Grid.Column="1" Width="150" Height="210" TextWrapping="Wrap" VerticalAlignment="Bottom" IsReadOnly="True" VerticalScrollBarVisibility="Visible" FontSize="15"/>
         </Border>
         <TextBlock x:Name="prompt" Grid.Row="4" Grid.Column="0" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="Bold" TextWrapping="Wrap"/>
-
+        <Image x:Name="DecodeResult" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Width="100" Height="100" VerticalAlignment="Top"/>
     </Grid>
 </Controls:MetroWindow>
