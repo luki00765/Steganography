@@ -28,3 +28,5 @@ C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganogra
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.Properties.Resources.resources
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csproj.GenerateResource.Cache
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csprojResolveAssemblyReference.cache
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\WelcomePage.baml
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\WelcomePage.g.cs
