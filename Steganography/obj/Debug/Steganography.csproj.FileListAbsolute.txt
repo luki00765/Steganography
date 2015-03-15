@@ -30,3 +30,7 @@ C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganogra
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\Steganography.csprojResolveAssemblyReference.cache
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\WelcomePage.baml
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\WelcomePage.g.cs
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\MahApps.Metro.dll
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\bin\Debug\MahApps.Metro.xml
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Debug\App.baml

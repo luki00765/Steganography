@@ -1,10 +1,16 @@
-﻿<Window x:Class="Steganography.MainWindow"
+﻿<Controls:MetroWindow x:Class="Steganography.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:converter="clr-namespace:Steganography"
         converter:WindowBehavior.HideCloseButton="True"
         Title="Steganography" Height="550" Width="625"
-		ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+		ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow"
+                      ShowCloseButton="False" 
+                      BorderBrush="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                      EnableDWMDropShadow="True"
+                      NonActiveWindowTitleBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Background="White" WindowTitleBrush="#FF1C9362"
+                      MinHeight="550" MaxHeight="550" MinWidth="625" MaxWidth="625">
     <Window.Resources>
         <converter:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
     </Window.Resources>
@@ -59,4 +65,4 @@
             <TextBox x:Name="MessageText" Grid.Row="1" Grid.Column="1" Width="150" Height="210" TextWrapping="Wrap" VerticalAlignment="Bottom" IsReadOnly="True" VerticalScrollBarVisibility="Visible" FontSize="15"/>
         </Border>
     </Grid>
-</Window>
+</Controls:MetroWindow>
