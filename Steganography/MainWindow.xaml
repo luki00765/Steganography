@@ -64,5 +64,7 @@
         <Border Grid.Row="1" Grid.Column="1" Width="150" Height="210" VerticalAlignment="Bottom" Margin="0,0,0,10" BorderThickness="1" BorderBrush="#FF000000" Visibility="{Binding ElementName=DecodeBtn, Path=Visibility}">
             <TextBox x:Name="MessageText" Grid.Row="1" Grid.Column="1" Width="150" Height="210" TextWrapping="Wrap" VerticalAlignment="Bottom" IsReadOnly="True" VerticalScrollBarVisibility="Visible" FontSize="15"/>
         </Border>
+        <TextBlock x:Name="prompt" Grid.Row="4" Grid.Column="0" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="Bold" TextWrapping="Wrap"/>
+
     </Grid>
 </Controls:MetroWindow>

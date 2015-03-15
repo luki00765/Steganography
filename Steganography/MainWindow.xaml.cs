@@ -28,6 +28,8 @@ namespace Steganography
 		public MainWindow()
 		{
 			InitializeComponent();
+			prompt.Text = "Prompt: firstly You should load the Image";
+			prompt.Foreground = Brushes.DarkRed;
 		}
 
 		private void OpenImage(object sender, RoutedEventArgs e)
@@ -48,6 +50,12 @@ namespace Steganography
 					TglButton.Visibility = System.Windows.Visibility.Visible;
 					DecodeBtn.Visibility = System.Windows.Visibility.Visible;
 					MessageText.Text = "";
+					prompt.Text = "";
+				}
+				else
+				{
+					prompt.Foreground = Brushes.DarkRed;
+					prompt.Text = "Prompt: Image not load correctly";
 				}
 			}
 		}
@@ -123,10 +131,24 @@ namespace Steganography
 				bmp = ConvertWriteableBitmapToBitmapImage(modifiedImage);
 				MessageToHide.Text = "";
 				TglButton.IsChecked = false;
+
+				bool answer = SteganographyHelper.isMessageLargerThanImage;
+				if (answer == false)
+				{
+					prompt.Foreground = Brushes.DarkGreen;
+					prompt.Text = "Prompt: Your text was hidden in the image SUCCESSFULLY! \nDont forget about to save the Image";
+				}
+				else
+				{
+					prompt.Foreground = Brushes.DarkRed;
+					prompt.Text = "Prompt: Message is to long. Change the image for a larger or write smaller text";
+				}
+				
 			}
 			else
 			{
-				MessageBox.Show("Message what do you want to hide, cannot be empty!");
+				prompt.Foreground = Brushes.DarkRed;
+				prompt.Text = "Prompt: Message what do you want to hide, cannot be empty!";
 			}
 			
 		}

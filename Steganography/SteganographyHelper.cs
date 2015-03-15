@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Steganography
 {
 	class SteganographyHelper
 	{
+		public static bool isMessageLargerThanImage;
+
 		public static WriteableBitmap Encrypt(BitmapImage bmp, string text)
 		{
 			WriteableBitmap writeBitmap = new WriteableBitmap(bmp);
@@ -62,6 +65,11 @@ namespace Steganography
 
 			binaryPixels = HideMessageInImage(binaryPixels, listBinaryText);
 
+			if (isMessageLargerThanImage == true)
+			{
+				return writeBitmap;
+			}
+
 			byte[] tableWithMessage = BinToByteArray(binaryPixels);
 
 			var rect = new Int32Rect(0, 0, bmpWidth, bmpHeight);
@@ -109,7 +117,8 @@ namespace Steganography
 					{
 						if(message.Count * tmp.Length + 8 >= binaryTab.Length - 2) // jeżeli ilość wiadomości pomnożona przez długość będzie większa od dosępnych pikseli to oznacza, że nie ma miejsca w tablicy aby pomieścić wiadomość. 8 - to jest dodatkowe miejsce na null, ponieważ będzie on potrzebny przy dekodowaniu wiadmości. Od długości tablicy zostało odjęte 2 ponieważ na każde 8bitów (RGB 0000 0000 ) przypadają dwie składowe ALPHA.
 						{
-							MessageBox.Show("Message is to long. Change the image for a larger or write smaller text");
+							//MessageBox.Show("Message is to long. Change the image for a larger or write smaller text");
+							isMessageLargerThanImage = true;
 							return binaryTab;
 						}
 						// Algorytm LSB. ostatni element w tablicy binarnej zamieniamy na pierwsze element liczby binarnej, następnie kolejny itp.
