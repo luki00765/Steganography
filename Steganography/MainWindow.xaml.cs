@@ -109,20 +109,12 @@ namespace Steganography
 
 		private void DecodeMethod(object sender, RoutedEventArgs e)
 		{
-			PBDecode.Visibility = System.Windows.Visibility.Visible;
 			SteganographyHelper steganographyHelper = new SteganographyHelper();
 			MessageText.Text = steganographyHelper.Decrypt(bmp);
-			//MessageText.Text = SteganographyHelper.Decrypt(bmp);
 		}
 
 		private void HideMethod(object sender, RoutedEventArgs e)
 		{
-			/*PBHide.Visibility = System.Windows.Visibility.Visible;
-			PBHide.Value += 5;
-			if(PBHide.Value == 100)
-			{
-				MessageBox.Show("Done");
-			}*/
 			if(MessageToHide.Text != "") // sprawdź czy wiadomość nie jest pusta
 			{
 				var modifiedImage = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
