@@ -123,8 +123,7 @@ namespace Steganography
 		private void DecodeMethod(object sender, RoutedEventArgs e)
 		{
 			DecodeResult.Source = null;
-			SteganographyHelper steganographyHelper = new SteganographyHelper();
-			MessageText.Text = steganographyHelper.Decrypt(bmp);
+			MessageText.Text = SteganographyHelper.Decrypt(bmp);
 
 			if (MessageText.Text != null && MessageText.Text != "Secret message NOT FOUND!")
 			{

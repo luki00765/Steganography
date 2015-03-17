@@ -168,11 +168,12 @@ namespace Steganography
 			return binaryTab;
 		}
 
-		List<string> MessageBinaryPixels = new List<string>(); // lista która będzie przechowywać tajną wiadomość
-		public string Decrypt(BitmapImage bmp)
+		private static List<string> MessageBinaryPixels = new List<string>(); // lista która będzie przechowywać tajną wiadomość
+		public static string Decrypt(BitmapImage bmp)
 		{
 			//odczytaj długość wiadomości w ostatnim pikselu; iteruj od początku obrazka po długości wiadomości.
 			// za ukrytą wiadomością wstaw null: 0000 0000 później sprawdzaj 0,8,16,32,64  % 8 == 0 warunek konieczny, musi być 8 zer
+			MessageBinaryPixels.Clear();
 			string message = "";
 			WriteableBitmap writeBitmap = new WriteableBitmap(bmp);
 			byte R = 0, G = 0, B = 0, A = 0; //red grenn blue alpha (przezroczystość)
@@ -220,7 +221,7 @@ namespace Steganography
 
 		
 		// Metoda która szuka nulla, czyli 0000 0000. Został on zapisany zaraz po ukrytej wiadomości
-		public bool FindNull(string[] binaryPixels)
+		public static bool FindNull(string[] binaryPixels)
 		{
 			int counterZero = 0;
 			string tmpString = "";
@@ -254,7 +255,7 @@ namespace Steganography
 		}
 
 		// funkcja, która wyodrębnia wiadomość z listy; następnie ją dekoduje i zwraca jako tekst
-		public string ExtractTheMessageFromList()
+		public static string ExtractTheMessageFromList()
 		{
 			string message = "";
 			string tmp = "";
