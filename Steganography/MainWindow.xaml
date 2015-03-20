@@ -54,8 +54,8 @@
             </Border.Effect>
             <Image x:Name="MyImage"  Grid.Row="1" Grid.Column="0" Width="374" Height="290" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Source="{Binding}" Stretch="Fill"/>
         </Border>
-        <ToggleButton x:Name="TglButton"  Grid.Row="2" Grid.Column="0" Content="Write Message"  Width="90" Height="25" HorizontalAlignment="Center" Margin="0,0,0,0" Visibility="Hidden"/>
-        <StackPanel Grid.Row="3" Grid.Column="0" Visibility="{Binding ElementName=TglButton, Path=IsChecked, Converter={StaticResource BoolVisibilityConverter}}">
+        <ToggleButton x:Name="TglButton"  Grid.Row="2" Grid.Column="0" Content="Write Message"  Width="90" Height="25" HorizontalAlignment="Left" Margin="57,0,0,0" Visibility="Hidden"/>
+        <StackPanel x:Name="stackPanel" Grid.Row="3" Grid.Column="0" Visibility="{Binding ElementName=TglButton, Path=IsChecked, Converter={StaticResource BoolVisibilityConverter}}">
             <TextBox x:Name="MessageToHide" Grid.Row="3" Grid.Column="0" Width="300" Height="75" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
             <Button Grid.Row="3" Grid.Column="0" Content="Hide" Width="60" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5,0,0" Click="HideMethod"/>
         </StackPanel>
@@ -66,5 +66,6 @@
         </Border>
         <TextBlock x:Name="prompt" Grid.Row="4" Grid.Column="0" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="Bold" TextWrapping="Wrap"/>
         <Image x:Name="DecodeResult" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Width="100" Height="100" VerticalAlignment="Top"/>
+        <Button x:Name="LoadMessageFromFile" Grid.Row="2" Grid.Column="0" Content="Load Text from File" HorizontalAlignment="Right" Width="120" Height="25" Margin="0,0,59,0" Visibility="Hidden" Click="LoadTextFromFile"/>
     </Grid>
 </Controls:MetroWindow>

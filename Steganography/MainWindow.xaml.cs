@@ -54,6 +54,7 @@ namespace Steganography
 					DecodeBtn.Visibility = System.Windows.Visibility.Visible;
 					MessageText.Text = "";
 					prompt.Text = "";
+					LoadMessageFromFile.Visibility = System.Windows.Visibility.Visible;
 					DecodeResult.Source = null;
 				}
 				else
@@ -186,6 +187,28 @@ namespace Steganography
 				bmp.Freeze();
 			}
 			return bmp;
+		}
+
+		private void LoadTextFromFile(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Text Files (*.txt)|*.txt";
+			dlg.Title = "Open Text File";
+			Nullable<bool> result = dlg.ShowDialog();
+
+			if (result == true)
+			{
+				path = dlg.FileName;
+				StreamReader streamReader = new StreamReader(path);
+				MessageToHide.Text = streamReader.ReadToEnd();
+				streamReader.Close();
+				TglButton.IsChecked = true;
+			}
+			else
+			{
+				prompt.Foreground = Brushes.DarkRed;
+				prompt.Text = "Prompt: Text file not load correctly";
+			}
 		}
 	}
 }
