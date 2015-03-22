@@ -171,7 +171,7 @@ namespace Steganography
 		private static List<string> MessageBinaryPixels = new List<string>(); // lista która będzie przechowywać tajną wiadomość
 		public static string Decrypt(BitmapImage bmp)
 		{
-			//odczytaj długość wiadomości w ostatnim pikselu; iteruj od początku obrazka po długości wiadomości.
+			/*//odczytaj długość wiadomości w ostatnim pikselu; iteruj od początku obrazka po długości wiadomości.
 			// za ukrytą wiadomością wstaw null: 0000 0000 później sprawdzaj 0,8,16,32,64  % 8 == 0 warunek konieczny, musi być 8 zer
 			MessageBinaryPixels.Clear();
 			string message = "";
@@ -215,7 +215,37 @@ namespace Steganography
 			}
 
 			message = ExtractTheMessageFromList(); // zwróć wiadomosć
+			return message;*/
 
+			string message = "";
+			byte letter = 0;
+			int findNull = 1;
+
+			int stride = bmp.PixelWidth * 4;
+			int size = bmp.PixelHeight * stride;
+			byte[] pixels = new byte[size];
+			bmp.CopyPixels(pixels, stride, 0);
+
+			for (int i = 0; i < size; i++)
+			{
+				if ((i % 4) == 3) //w każdej iteracji pomiń ALPHA
+					continue;
+
+				letter = (byte)((byte)(letter << 1) | (byte)(pixels[i] & 1)); // << przesunięcie bitu o 1 np. 3 << 2 czyli: 0011 << 2 = 1100. wynik 12.
+				// Przeszukanie szuka litery zapisanej w postaci dziesiętnej; funkcja używa | alternatywy;  & koniunkcji
+
+				if ((findNull % 8) == 0) // szuka nulli
+				{
+					message += (char)letter;
+
+					if (letter == 0) //znak null kończący napis
+						break;
+
+					letter = 0;
+				}
+				findNull++;
+			}
+			message = message.Replace("\0", String.Empty); // usuń \0
 			return message;
 		}
 
