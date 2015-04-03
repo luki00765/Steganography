@@ -150,9 +150,7 @@ namespace Steganography
 				MessageText.Text = "";
 				var modifiedImage = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
 				MyImage.Source = modifiedImage;
-				Test(modifiedImage); //////////////////////////////////////////// DO USUNIĘCIA
 				bmp = ConvertWriteableBitmapToBitmapImage(modifiedImage);
-				Test2(bmp); //////////////////////////////////////////// DO USUNIĘCIA
 				MessageToHide.Text = "";
 				TglButton.IsChecked = false;
 				DecodeResult.Source = null;
@@ -218,94 +216,5 @@ namespace Steganography
 				prompt.Text = "Prompt: Text file not load correctly";
 			}
 		}
-
-		///////////// do usunięcia /////////////////////////////////////////////////////////////////////////////////////
-		private void Test(WriteableBitmap writeBitmap)
-		{
-			byte R = 0, G = 0, B = 0, A = 0; //red grenn blue alpha (przezroczystość)
-
-			int bmpWidth = writeBitmap.PixelWidth; // szerokość obrazka
-			int bmpHeight = writeBitmap.PixelHeight; // wysokość obrazka
-
-			int stride = bmpWidth * 4; // Suma wszystkich pikseli w jednym wierszu
-			int size = bmpHeight * stride; // suma wszystkich pikseli w wierszy * długość obrazka = suma wszystkich pikseli w obrazie
-			byte[] pixels = new byte[size];
-			writeBitmap.CopyPixels(pixels, stride, 0);
-
-			List<string> listBinaryText = new List<string>();
-			string[] binaryPixels = new string[size];
-
-			for (int i = 0; i < bmpHeight; i++)
-			{
-				for (int j = 0; j < bmpWidth; j++) // pętla idzie po szerokości obrazka ----->
-				{
-
-					int index = i * stride + 3 * j; // wyznaczamy indeks w tablicy jednowymiarowej "pixels". Chodzimy co 4 ponieważ w każdym pikselu mamy 4 składkowe RGBA
-
-					R = pixels[index];
-					G = pixels[index + 1];
-					B = pixels[index + 2];
-					//A = pixels[index + 3];
-
-					binaryPixels[index] = decToBin(R);
-					binaryPixels[index + 1] = decToBin(G);
-					binaryPixels[index + 2] = decToBin(B);
-					//binaryPixels[index + 3] = decToBin(A);
-				}
-			}
-		}
-
-		private void Test2(BitmapImage writeBitmap)
-		{
-			byte R = 0, G = 0, B = 0, A = 0; //red grenn blue alpha (przezroczystość)
-
-			int bmpWidth = writeBitmap.PixelWidth; // szerokość obrazka
-			int bmpHeight = writeBitmap.PixelHeight; // wysokość obrazka
-
-			int stride = bmpWidth * 4; // Suma wszystkich pikseli w jednym wierszu
-			int size = bmpHeight * stride; // suma wszystkich pikseli w wierszy * długość obrazka = suma wszystkich pikseli w obrazie
-			byte[] pixels = new byte[size];
-			writeBitmap.CopyPixels(pixels, stride, 0);
-
-			List<string> listBinaryText = new List<string>();
-			string[] binaryPixels = new string[size];
-
-			for (int i = 0; i < bmpHeight; i++)
-			{
-				for (int j = 0; j < bmpWidth; j++) // pętla idzie po szerokości obrazka ----->
-				{
-
-					int index = i * stride + 3 * j; // wyznaczamy indeks w tablicy jednowymiarowej "pixels". Chodzimy co 4 ponieważ w każdym pikselu mamy 4 składkowe RGBA
-
-					R = pixels[index];
-					G = pixels[index + 1];
-					B = pixels[index + 2];
-					//A = pixels[index + 3];
-
-					binaryPixels[index] = decToBin(R);
-					binaryPixels[index + 1] = decToBin(G);
-					binaryPixels[index + 2] = decToBin(B);
-					//binaryPixels[index + 3] = decToBin(A);
-				}
-			}
-		}
-
-		public static string decToBin(int number)
-		{
-			string decToBin = Convert.ToString(number, 2);
-			string result = "";
-			if (decToBin.Length < 8)
-			{
-				for (int i = 0; i < 8 - decToBin.Length; i++)
-				{
-					result += "0";
-				}
-				result += decToBin;
-				return result;
-			}
-			return decToBin;
-		}
-
-		////////////////////////////////////////////////////////////////////////
 	}
 }

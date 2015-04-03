@@ -16,12 +16,12 @@ namespace Steganography
 		public static WriteableBitmap Encrypt(BitmapImage bmp, string text)
 		{
 			WriteableBitmap writeBitmap = new WriteableBitmap(bmp);
-			byte R = 0, G = 0, B = 0; //red grenn blue
+			byte R = 0, G = 0, B = 0, A = 0; //red grenn blue
 
 			int bmpWidth = writeBitmap.PixelWidth; // szerokość obrazka
 			int bmpHeight = writeBitmap.PixelHeight; // wysokość obrazka
-
-			int stride = bmpWidth * 3; // Suma wszystkich pikseli w jednym wierszu
+			int bitsPerPixel = bmp.Format.BitsPerPixel / 8; //ilość kanałów na każdy piksel
+			int stride = bmpWidth * bitsPerPixel; // Suma wszystkich pikseli w jednym wierszu
 			int size = bmpHeight * stride; // suma wszystkich pikseli w wierszy * długość obrazka = suma wszystkich pikseli w obrazie
 			byte[] pixels = new byte[size];
 			writeBitmap.CopyPixels(pixels, stride, 0);
@@ -33,7 +33,7 @@ namespace Steganography
 			{
 				for (int j = 0; j < bmpWidth; j++) // pętla idzie po szerokości obrazka ----->
 				{
-					int index = i * stride + 3 * j; // wyznaczamy indeks w tablicy jednowymiarowej "pixels".
+					int index = i * stride + bitsPerPixel * j; // wyznaczamy indeks w tablicy jednowymiarowej "pixels".
 					R = pixels[index];
 					G = pixels[index + 1];
 					B = pixels[index + 2];
@@ -41,6 +41,12 @@ namespace Steganography
 					binaryPixels[index] = decToBin(R);
 					binaryPixels[index + 1] = decToBin(G);
 					binaryPixels[index + 2] = decToBin(B);
+
+					if (bmp.Format.BitsPerPixel == 32)
+					{
+						A = pixels[index + 3];
+						binaryPixels[index + 3] = decToBin(A);
+					}
 				}
 			}
 
@@ -146,7 +152,7 @@ namespace Steganography
 		private static List<string> MessageBinaryPixels = new List<string>(); // lista która będzie przechowywać tajną wiadomość
 		public static string Decrypt(BitmapImage bmp)
 		{
-			//odczytaj długość wiadomości w ostatnim pikselu; iteruj od początku obrazka po długości wiadomości.
+			/*//odczytaj długość wiadomości w ostatnim pikselu; iteruj od początku obrazka po długości wiadomości.
 			// za ukrytą wiadomością wstaw null: 0000 0000 później sprawdzaj 0,8,16,32,64  % 8 == 0 warunek konieczny, musi być 8 zer
 			MessageBinaryPixels.Clear();
 			string message = "";
@@ -180,21 +186,24 @@ namespace Steganography
 				return "Secret message NOT FOUND!";
 			}
 			message = ExtractTheMessageFromList(); // zwróć wiadomosć
-			return message;
+			return message;*/
 
-			/*string message = "";
+			string message = "";
 			byte letter = 0;
 			int findNull = 1;
-
-			int stride = bmp.PixelWidth * 4;
+			int bitsPerPixel = bmp.Format.BitsPerPixel / 8;
+			int stride = bmp.PixelWidth * bitsPerPixel;
 			int size = bmp.PixelHeight * stride;
 			byte[] pixels = new byte[size];
 			bmp.CopyPixels(pixels, stride, 0);
 
 			for (int i = 0; i < size; i++)
 			{
-				if ((i % 4) == 3) //w każdej iteracji pomiń ALPHA
-					continue;
+				if (bmp.Format.BitsPerPixel == 32)
+				{
+					if ((i % 4) == 3) //w każdej iteracji pomiń ALPHA
+						continue;
+				}
 
 				letter = (byte)((byte)(letter << 1) | (byte)(pixels[i] & 1)); // << przesunięcie bitu o 1 np. 3 << 2 czyli: 0011 << 2 = 1100. wynik 12.
 				// Przeszukanie szuka litery zapisanej w postaci dziesiętnej; funkcja używa | alternatywy;  & koniunkcji
@@ -204,14 +213,20 @@ namespace Steganography
 					message += (char)letter;
 
 					if (letter == 0) //znak null kończący napis
-						break;
-
+					{
+						message = message.Replace("\0", String.Empty); // usuń \0
+						return message;
+					}
+					if (letter >= 128)
+					{
+						return "";
+					}
 					letter = 0;
 				}
 				findNull++;
 			}
-			message = message.Replace("\0", String.Empty); // usuń \0
-			return message;*/
+
+			return "";
 		}
 
 
@@ -273,7 +288,7 @@ namespace Steganography
 					return text;
 				}
 			}
-
+			
 			return text;
 		}
 
