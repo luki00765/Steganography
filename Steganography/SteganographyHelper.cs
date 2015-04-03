@@ -67,7 +67,7 @@ namespace Steganography
 				listBinaryText.Add(binaryCharacter);
 			}
 
-			binaryPixels = HideMessageInImage(binaryPixels, listBinaryText);
+			binaryPixels = HideMessageInImage(binaryPixels, listBinaryText, bmp.Format.BitsPerPixel);
 
 			if (isMessageLargerThanImage == true)
 			{
@@ -108,7 +108,7 @@ namespace Steganography
 			return tableWithMessage;
 		}
 
-		public static string[] HideMessageInImage(string[] binaryTab, List<string> message)
+		public static string[] HideMessageInImage(string[] binaryTab, List<string> message, int bitsPerPixel)
 		{
 			int j = 0;
 			for (int i = 0; i < binaryTab.Length; ) // pobierz długość tablicy z pikselami
@@ -128,20 +128,59 @@ namespace Steganography
 						 *  Rezultat: tablica 11111110 11111110 11111111
 						 * wybieramy najmniej znaczące bity i wstawiamy w nie wiadomość
 						 */
-						string tmpString = binaryTab[i];
-						tmpString = tmpString.Remove(7) + tmp[k];
-						binaryTab[i] = tmpString;
-						i++;
+						if (bitsPerPixel == 32)
+						{
+							if(i % 4 == 3)
+							{
+								i++;
+								k--;
+								continue;
+							}
+							else
+							{
+								string tmpString = binaryTab[i];
+								tmpString = tmpString.Remove(7) + tmp[k];
+								binaryTab[i] = tmpString;
+								i++;
+							}
+						}
+						else
+						{
+							string tmpString = binaryTab[i];
+							tmpString = tmpString.Remove(7) + tmp[k];
+							binaryTab[i] = tmpString;
+							i++;
+						}
 					}
 				}
 
 				// po ukryciu wiadomości w obrazie zapisz po niej null czyli 0000 0000 aby później móc odkodować wiadomość.
 				for (int l = 0; l < 8; l++)
 				{
-					string tmpString = binaryTab[i];
-					tmpString = tmpString.Remove(7) + "0";
-					binaryTab[i] = tmpString;
-					i++;
+					if(bitsPerPixel == 32)
+					{
+						if (i % 4 == 3)
+						{
+							i++;
+							l--;
+							continue;
+						}
+						else
+						{
+							string tmpString = binaryTab[i];
+							tmpString = tmpString.Remove(7) + "0";
+							binaryTab[i] = tmpString;
+							i++;
+						}
+					}
+					else
+					{
+						string tmpString = binaryTab[i];
+						tmpString = tmpString.Remove(7) + "0";
+						binaryTab[i] = tmpString;
+						i++;
+					}
+					
 				}
 				break; // jeżeli ukryjesz wiadomość i dopiszesz dodatkowo osiem zer to wyjdź z pętli.
 			}
