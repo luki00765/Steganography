@@ -35,13 +35,15 @@ namespace Steganography
 				{
 					int index = i * stride + bitsPerPixel * j; // wyznaczamy indeks w tablicy jednowymiarowej "pixels".
 					R = pixels[index];
-					G = pixels[index + 1];
-					B = pixels[index + 2];
-
 					binaryPixels[index] = decToBin(R);
-					binaryPixels[index + 1] = decToBin(G);
-					binaryPixels[index + 2] = decToBin(B);
 
+					if (bmp.Format.BitsPerPixel >= 24)
+					{
+						G = pixels[index + 1];
+						B = pixels[index + 2];
+						binaryPixels[index + 1] = decToBin(G);
+						binaryPixels[index + 2] = decToBin(B);
+					}
 					if (bmp.Format.BitsPerPixel == 32)
 					{
 						A = pixels[index + 3];
