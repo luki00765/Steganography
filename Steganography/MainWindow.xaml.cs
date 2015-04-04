@@ -148,6 +148,7 @@ namespace Steganography
 			if(MessageToHide.Text != "") // sprawdź czy wiadomość nie jest pusta
 			{
 				MessageText.Text = "";
+				SteganographyHelper.isMessageLargerThanImage = false;
 				var modifiedImage = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
 				MyImage.Source = modifiedImage;
 				bmp = ConvertWriteableBitmapToBitmapImage(modifiedImage);
