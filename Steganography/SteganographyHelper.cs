@@ -20,7 +20,15 @@ namespace Steganography
 
 			int bmpWidth = writeBitmap.PixelWidth; // szerokość obrazka
 			int bmpHeight = writeBitmap.PixelHeight; // wysokość obrazka
-			int bitsPerPixel = bmp.Format.BitsPerPixel / 8; //ilość kanałów na każdy piksel
+			int bitsPerPixel; //ilość kanałów na każdy piksel
+			if(bmp.Format.BitsPerPixel < 8)
+			{
+				bitsPerPixel = 1;
+			}
+			else
+			{
+				bitsPerPixel = bmp.Format.BitsPerPixel / 8; 
+			}
 			int stride = bmpWidth * bitsPerPixel; // Suma wszystkich pikseli w jednym wierszu
 			int size = bmpHeight * stride; // suma wszystkich pikseli w wierszy * długość obrazka = suma wszystkich pikseli w obrazie
 			byte[] pixels = new byte[size];
@@ -36,15 +44,17 @@ namespace Steganography
 					int index = i * stride + bitsPerPixel * j; // wyznaczamy indeks w tablicy jednowymiarowej "pixels".
 					R = pixels[index];
 					binaryPixels[index] = decToBin(R);
-
-					if (bmp.Format.BitsPerPixel >= 24)
+					if(bmp.Format.BitsPerPixel >= 16)
 					{
 						G = pixels[index + 1];
-						B = pixels[index + 2];
 						binaryPixels[index + 1] = decToBin(G);
+					}
+					if (bmp.Format.BitsPerPixel >= 24)
+					{
+						B = pixels[index + 2];
 						binaryPixels[index + 2] = decToBin(B);
 					}
-					if (bmp.Format.BitsPerPixel == 32)
+					if (bmp.Format.BitsPerPixel >= 32)
 					{
 						A = pixels[index + 3];
 						binaryPixels[index + 3] = decToBin(A);
@@ -130,7 +140,7 @@ namespace Steganography
 						 *  Rezultat: tablica 11111110 11111110 11111111
 						 * wybieramy najmniej znaczące bity i wstawiamy w nie wiadomość
 						 */
-						if (bitsPerPixel == 32)
+						if (bitsPerPixel >= 32)
 						{
 							if(i % 4 == 3)
 							{
@@ -159,7 +169,7 @@ namespace Steganography
 				// po ukryciu wiadomości w obrazie zapisz po niej null czyli 0000 0000 aby później móc odkodować wiadomość.
 				for (int l = 0; l < 8; l++)
 				{
-					if(bitsPerPixel == 32)
+					if(bitsPerPixel >= 32)
 					{
 						if (i % 4 == 3)
 						{
@@ -232,7 +242,15 @@ namespace Steganography
 			string message = "";
 			byte letter = 0;
 			int findNull = 1;
-			int bitsPerPixel = bmp.Format.BitsPerPixel / 8;
+			int bitsPerPixel;
+			if (bmp.Format.BitsPerPixel < 8)
+			{
+				bitsPerPixel = 1;
+			}
+			else
+			{
+				bitsPerPixel = bmp.Format.BitsPerPixel / 8;
+			}
 			int stride = bmp.PixelWidth * bitsPerPixel;
 			int size = bmp.PixelHeight * stride;
 			byte[] pixels = new byte[size];
@@ -240,7 +258,7 @@ namespace Steganography
 
 			for (int i = 0; i < size; i++)
 			{
-				if (bmp.Format.BitsPerPixel == 32)
+				if (bmp.Format.BitsPerPixel >= 32)
 				{
 					if ((i % 4) == 3) //w każdej iteracji pomiń ALPHA
 						continue;

@@ -26,6 +26,7 @@ namespace Steganography
 	{
 		public BitmapImage bmp = null;
 		string path;
+		string extension;
 
 		public MainWindow()
 		{
@@ -44,6 +45,7 @@ namespace Steganography
 
 			if (result == true)
 			{
+				extension = System.IO.Path.GetExtension(dlg.SafeFileName).ToLower();
 				path = dlg.FileName;
 				bmp = new BitmapImage();
 				bmp.BeginInit();
@@ -136,7 +138,7 @@ namespace Steganography
 				DecodeResult.Source = new BitmapImage(new Uri(@"pack://application:,,,/Images/ok.jpg"));
 			}
 			// Sprawdź wszystkie przypadki; przypadek == "" jest dla zdjęć czarno-białych; przypadek Secret message NOT FOUND to jest zwrócona wiadomość która nie jest nullem, ale informuje o tym, że nic nie odnaleziono
-			if (MessageText.Text == "" || MessageText.Text == null || MessageText.Text == "Secret message NOT FOUND!")
+			if (MessageText.Text == "" || MessageText.Text == "Secret message NOT FOUND!")
 			{
 				MessageText.Text = "Secret message NOT FOUND!"; // przypadek dla obrazów czarno-białych które teoretycznie wykrywają wiadomość ale w postaci samych zer
 				DecodeResult.Source = new BitmapImage(new Uri(@"pack://application:,,,/Images/X.jpg"));
@@ -183,9 +185,27 @@ namespace Steganography
 			bmp = new BitmapImage();
 			using (MemoryStream stream = new MemoryStream())
 			{
-				BmpBitmapEncoder encoder = new BmpBitmapEncoder();
-				encoder.Frames.Add(BitmapFrame.Create(wbm));
-				encoder.Save(stream);
+				switch(extension)
+				{
+					case @".bmp":
+						BmpBitmapEncoder encoderBMP = new BmpBitmapEncoder();
+						encoderBMP.Frames.Add(BitmapFrame.Create(wbm));
+						encoderBMP.Save(stream);
+						break;
+					case @".png":
+					case @".jpg":
+					case @".jpeg":
+						PngBitmapEncoder encoderPNG = new PngBitmapEncoder();
+						encoderPNG.Frames.Add(BitmapFrame.Create(wbm));
+						encoderPNG.Save(stream);
+						break;
+					case @".gif":
+						GifBitmapEncoder encoderGIF = new GifBitmapEncoder();
+						encoderGIF.Frames.Add(BitmapFrame.Create(wbm));
+						encoderGIF.Save(stream);
+						break;
+				}
+
 				bmp.BeginInit();
 				bmp.CacheOption = BitmapCacheOption.OnLoad;
 				bmp.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
