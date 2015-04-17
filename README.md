@@ -4,8 +4,8 @@ This application was written as a part of the master thesis.
 ## About app:
 ```
 Imagine that you want send a secret message to your friend without the knowledge of other people. 
-Using this application it will be possible. You just need to select the image in what do you want 
-to hide the secret message and click encrypt - simple, right?. 
+Using this application it will be possible. You just need to select the image in 
+what do you want to hide the secret message and click encrypt - simple, right?. 
 On the next step you can send the image with the message to your friend, 
 which decode that and read the secret message.
 ```
