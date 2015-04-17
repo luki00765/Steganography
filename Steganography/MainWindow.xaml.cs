@@ -39,7 +39,7 @@ namespace Steganography
 		private void OpenImage(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Images (*.bmp;*.jpeg;*.png;*.jpg;*.gif)|*.bmp;*.jpeg;*.png;*jpg;*gif";
+			dlg.Filter = "Images (*.bmp;*.jpeg;*.png;*.jpg;)|*.bmp;*.jpeg;*.png;*jpg;";
 			dlg.Title = "Open Image File";
 			Nullable<bool> result = dlg.ShowDialog();
 
