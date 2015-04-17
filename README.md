@@ -26,7 +26,7 @@ As a reciver:
 Prompt - tells us what we should to do at the moment or inform us about errors.
 ```
 ## Screenshots:
-----
+
 ![Image](Screenshots/1.jpg)
 
 ----
