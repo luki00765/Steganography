@@ -18,3 +18,4 @@ C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Release\Steganog
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Release\Steganography.csproj.GenerateResource.Cache
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Release\Steganography.exe
 C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Release\Steganography.pdb
+C:\Users\Lukii\Documents\GitHub\Steganography\Steganography\obj\Release\Steganography.csprojResolveAssemblyReference.cache

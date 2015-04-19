@@ -162,12 +162,12 @@ namespace Steganography
 				if (answer == false)
 				{
 					prompt.Foreground = Brushes.DarkGreen;
-					prompt.Text = "Prompt: Your text was hidden in the image SUCCESSFULLY! \nDon't forget to save the Image";
+					prompt.Text = "Prompt: Your text was hidden in the Image SUCCESSFULLY! \nDon't forget to save the Image";
 				}
 				else
 				{
 					prompt.Foreground = Brushes.DarkRed;
-					prompt.Text = "Prompt: Message is too long. Change the image to a larger size or type in shorter text";
+					prompt.Text = "Prompt: Message is too long. Change the Image to a larger size or type in shorter text";
 				}
 				
 			}
