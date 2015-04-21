@@ -25,6 +25,8 @@ As a reciver:
 2) Click Decode Button and read the message
 
 Prompt - Gives us tips what should we do at certain moments and informs us about the errors.
+
+This application supports ASCII encoding only!
 ```
 ## Screenshots:
 
