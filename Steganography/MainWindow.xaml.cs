@@ -67,7 +67,7 @@ namespace Steganography
 				else
 				{
 					prompt.Foreground = Brushes.DarkRed;
-					prompt.Text = "Prompt: Image not load correctly";
+					prompt.Text = "Prompt: Image didn't load correctly";
 				}
 			}
 		}
@@ -114,7 +114,7 @@ namespace Steganography
 			}
 			else
 			{
-				MessageBox.Show("You should Load Image before Saving");
+				MessageBox.Show("You should Load the Image before Saving");
 			}
 		}
 
@@ -162,19 +162,19 @@ namespace Steganography
 				if (answer == false)
 				{
 					prompt.Foreground = Brushes.DarkGreen;
-					prompt.Text = "Prompt: Your text was hidden in the image SUCCESSFULLY! \nDont forget about to save the Image";
+					prompt.Text = "Prompt: Your text was hidden in the image SUCCESSFULLY! \nDon't forget to save the Image";
 				}
 				else
 				{
 					prompt.Foreground = Brushes.DarkRed;
-					prompt.Text = "Prompt: Message is to long. Change the image for a larger or write smaller text";
+					prompt.Text = "Prompt: Message is too long. Change the image to a larger size or type in shorter text";
 				}
 				
 			}
 			else
 			{
 				prompt.Foreground = Brushes.DarkRed;
-				prompt.Text = "Prompt: Message what do you want to hide, cannot be empty!";
+				prompt.Text = "Prompt: You have to type in the message before continuing!";
 			}
 			
 		}
@@ -234,7 +234,7 @@ namespace Steganography
 			else
 			{
 				prompt.Foreground = Brushes.DarkRed;
-				prompt.Text = "Prompt: Text file not load correctly";
+				prompt.Text = "Prompt: The Text file didn't load correctly";
 			}
 		}
 	}
