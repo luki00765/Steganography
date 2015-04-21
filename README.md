@@ -40,3 +40,11 @@ Prompt - tells us what we should to do at the moment or inform us about errors.
 ![Image](Screenshots/4.jpg)
 
 ----
+
+## Requirements:
+
+OS: Windows Vista/ 7 / 8 / 8.1
+Microsoft .NET Framework 4.5 - [download here] (https://www.microsoft.com/pl-pl/download/details.aspx?id=30653)
+
+## Download App:
+soon..
