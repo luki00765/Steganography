@@ -43,7 +43,7 @@ Prompt - Gives us tips what should we do at certain moments and informs us about
 
 ## Requirements:
 
-OS: Windows Vista/ 7 / 8 / 8.1
+OS: Windows Vista / 7 / 8 / 8.1 / 10
 
 Microsoft .NET Framework 4.5 - [download here] (https://www.microsoft.com/pl-pl/download/details.aspx?id=30653)
 
