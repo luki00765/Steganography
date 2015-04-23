@@ -57,6 +57,7 @@ namespace Steganography
 
 				if (MyImage.Source != null)
 				{
+					SaveFileAsTxtBtn.Visibility = System.Windows.Visibility.Hidden;
 					TglButton.Visibility = System.Windows.Visibility.Visible;
 					DecodeBtn.Visibility = System.Windows.Visibility.Visible;
 					MessageText.Text = "";
@@ -135,11 +136,13 @@ namespace Steganography
 
 			if (MessageText.Text != null && MessageText.Text != "Secret message NOT FOUND!")
 			{
+				SaveFileAsTxtBtn.Visibility = System.Windows.Visibility.Visible;
 				DecodeResult.Source = new BitmapImage(new Uri(@"pack://application:,,,/Images/ok.jpg"));
 			}
 			// Sprawdź wszystkie przypadki; przypadek == "" jest dla zdjęć czarno-białych; przypadek Secret message NOT FOUND to jest zwrócona wiadomość która nie jest nullem, ale informuje o tym, że nic nie odnaleziono
 			if (MessageText.Text == "" || MessageText.Text == "Secret message NOT FOUND!")
 			{
+				SaveFileAsTxtBtn.Visibility = System.Windows.Visibility.Hidden;
 				MessageText.Text = "Secret message NOT FOUND!"; // przypadek dla obrazów czarno-białych które teoretycznie wykrywają wiadomość ale w postaci samych zer
 				DecodeResult.Source = new BitmapImage(new Uri(@"pack://application:,,,/Images/X.jpg"));
 			}
@@ -149,6 +152,7 @@ namespace Steganography
 		{
 			if(MessageToHide.Text != "") // sprawdź czy wiadomość nie jest pusta
 			{
+				SaveFileAsTxtBtn.Visibility = System.Windows.Visibility.Hidden;
 				MessageText.Text = "";
 				SteganographyHelper.isMessageLargerThanImage = false;
 				var modifiedImage = SteganographyHelper.Encrypt(bmp, MessageToHide.Text);
@@ -235,6 +239,26 @@ namespace Steganography
 			{
 				prompt.Foreground = Brushes.DarkRed;
 				prompt.Text = "Prompt: The Text file didn't load correctly";
+			}
+		}
+
+		private void SaveFileAsTxtFile(object sender, RoutedEventArgs e)
+		{
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "Text File|*.txt";
+			dlg.Title = "Save Message";
+			dlg.DefaultExt = "txt";
+			Nullable<bool> result = dlg.ShowDialog();
+
+			if(result == true)
+			{
+				File.WriteAllText(dlg.FileName, MessageText.Text);
+				MessageBox.Show("The file is saved in: \n" + dlg.FileName);
+			}
+			else
+			{
+				prompt.Foreground = Brushes.DarkRed;
+				prompt.Text = "Prompt: The Message didn't save correctly";
 			}
 		}
 	}
