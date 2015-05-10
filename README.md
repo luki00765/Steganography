@@ -13,7 +13,7 @@ to your friend and he can decode it using the same application.
 ## Instructions:
 ```
 As a sender:
-1) Load image. Click Image > Open > select the image. Extensions: *.bmp, *.jpg, *.jpeg
+1) Load image. Click Image > Open > select the image. Extensions: *.bmp, *.jpg, *.jpeg, *.png
 2) Type in the secret message. You have to choose one of two possibilities: 
     Type in the Message or load text from file (extension *.txt)
 3) Click Hide
