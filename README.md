@@ -1,4 +1,4 @@
-### Steganography
+## Steganography
 This application was written as a part of the master thesis.
 
 ## About app:
